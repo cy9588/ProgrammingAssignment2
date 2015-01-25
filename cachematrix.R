@@ -55,3 +55,7 @@ cacheSolve <- function(x, ...) {
         return (m) 				# return the inverse after operation
 }
   
+#
+#
+# reference : http://www.snip2code.com/Snippet/71750/Here-is-my-cachematrix-R
+#

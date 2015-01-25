@@ -21,19 +21,19 @@
 # Four sub functions, they are:
 # 	set() : to set the matrix
 #	get() : to retrieve the matrix
-#	setInv() : to buffer a matrix for the access by another functions
-#	getInv() : to return a inverted matrix when available, otherwise return NULL
+#	setInv() : to buffer an inverse matrix for future access
+#	getInv() : to return an inverse matrix when available, otherwise return NULL
 
 makeCacheMatrix <- function(x = matrix()) {
 
-	xInv <- NULL  
-	set <- function(y) {
-        	x <<- y
-        	xinv <<- NULL 
+	xInverse   <- NULL  
+	set    <- function(y) {
+        	x    <<- y
+        	xInv <<- NULL 
       	}
-      	get <- function() x 
-      	setInv <- function(inv) xInv <<- inv 
-      	getInv <- function() xInv 
+      	get    <- function() x 
+      	setInv <- function(invMatrix) xInverse <<- invMatrix 
+      	getInv <- function() xInverse 
       	list(set = set, get = get, setInv = setInv, getInv = getInv)
   }
 
@@ -44,14 +44,13 @@ makeCacheMatrix <- function(x = matrix()) {
 # otherwise do the invert operation with function solve() then return
 # 
 cacheSolve <- function(x, ...) {
-        m <- x$getInv() 			# load from cache
+        m <- x$getInv() 			# load inverse 
 	if(!is.null(m)) { 			# if found, return the matrix in cache 
         	message("getting cached data")
         	return(m) 			# rest of the code in this function skipped
-	}
-        data <- x$get() 			# load the original matrix
-        m <- solve(data) 			# do the invert operation
-        x$setInv(m) 				# put the inverted matrix in cache as buffer
-        m 					# return the inverted matrix after operation
+	}		
+        m <- solve(x$get()) 			# load original matrix and do the invert operation
+        x$setInv(m) 				# put the inverse in cache as buffer
+        return (m) 				# return the inverse after operation
 }
   

@@ -47,11 +47,11 @@ cacheSolve <- function(x, ...) {
         m <- x$getInv() 			# load from cache
 	if(!is.null(m)) { 			# if found, return the matrix in cache 
         	message("getting cached data")
-        	return(m) 
+        	return(m) 			# rest of the code in this function skipped
 	}
         data <- x$get() 			# load the original matrix
         m <- solve(data) 			# do the invert operation
         x$setInv(m) 				# put the inverted matrix in cache as buffer
-        m 
+        m 					# return the inverted matrix after operation
 }
   
